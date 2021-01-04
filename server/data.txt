@@ -1,0 +1,44 @@
+[
+  {
+    "director": "test",
+    "id": "3",
+    "rating": 6.5,
+    "title": "test",
+    "year": 9999
+  },
+  {
+    "director": "m curtiz",
+    "id": "8",
+    "rating": 8.0,
+    "title": "casablanca",
+    "year": 1942
+  },
+  {
+    "director": "m scorsese",
+    "id": "9",
+    "rating": 0.0,
+    "title": "casino",
+    "year": 1995
+  },
+  {
+    "director": "michael bay",
+    "id": "10",
+    "rating": 7.5,
+    "title": "bad boys",
+    "year": 1990
+  },
+  {
+    "director": "jj",
+    "id": "13",
+    "rating": 7.0,
+    "title": "gone with the wind",
+    "year": 1939
+  },
+  {
+    "director": "cba",
+    "id": "16",
+    "rating": 0.5,
+    "title": "abc",
+    "year": 66
+  }
+]

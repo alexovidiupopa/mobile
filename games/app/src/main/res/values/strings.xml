@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">games</string>
+    <string name="id">Id:</string>
+    <string name="item">Name:</string>
+    <string name="size">Size</string>
+    <string name="score">Score</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">documents</string>
+    <string name="usage">Usage</string>
+    <string name="size">Size</string>
+    <string name="item">Name</string>
+    <string name="id">id</string>
+</resources>

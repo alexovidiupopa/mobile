@@ -1,16 +1,21 @@
 package ro.alexpopa.documents.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,6 +25,8 @@ import ro.alexpopa.documents.MainApp;
 import ro.alexpopa.documents.NetworkingManager;
 import ro.alexpopa.documents.R;
 import ro.alexpopa.documents.adapter.DataAdapter;
+import ro.alexpopa.documents.preferences.SharedPreferencesEntry;
+import ro.alexpopa.documents.preferences.SharedPreferencesHelper;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements MyCallback {
@@ -31,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
     private View recyclerView;
     private NetworkingManager manager;
 
+    private SharedPreferencesHelper sharedPreferencesHelper;
+
     private Button reportsButton;
     private Button borrowButton;
 
@@ -39,13 +48,6 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         manager = new NetworkingManager(getApplication());
-        try {
-            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
-            user = applicationInfo.metaData.getString("user");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,15 +63,39 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
             onAddClick(fab);
         });
 
-
         progressBar = findViewById(R.id.progress);
 
         recyclerView = findViewById(R.id.event_list);
 
-        NetworkingManager.initializeWebSocket(recyclerView);
+        NetworkingManager.initializeWebSocket(progressBar);
 
-        setupRecyclerView((RecyclerView) recyclerView);
-        loadData();
+        sharedPreferencesHelper = new SharedPreferencesHelper(PreferenceManager.getDefaultSharedPreferences(this));
+        user = sharedPreferencesHelper.getEntry().getUser();
+        if (user.equals("")) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Current user:");
+
+            // Set up the input
+            final EditText input = new EditText(this);
+
+            builder.setView(input);
+
+            // Set up the button
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                user = input.getText().toString();
+                sharedPreferencesHelper.saveUser(new SharedPreferencesEntry(user));
+                setupRecyclerView((RecyclerView) recyclerView);
+                loadData();
+            });
+
+            builder.show();
+
+        }
+        else {
+            setupRecyclerView((RecyclerView) recyclerView);
+            loadData();
+        }
 
     }
 

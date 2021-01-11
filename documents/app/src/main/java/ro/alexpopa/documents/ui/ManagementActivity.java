@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import ro.alexpopa.documents.NetworkingManager;
 import ro.alexpopa.documents.R;
 import ro.alexpopa.documents.model.Document;
+import ro.alexpopa.documents.preferences.SharedPreferencesHelper;
 
 public class ManagementActivity extends AppCompatActivity implements MyCallback{
     private RecyclerView recyclerView;
@@ -34,12 +36,8 @@ public class ManagementActivity extends AppCompatActivity implements MyCallback{
 
         recyclerView = findViewById(R.id.available_list);
 
-        try {
-            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
-            user = applicationInfo.metaData.getString("user");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(PreferenceManager.getDefaultSharedPreferences(this));
+        user = sharedPreferencesHelper.getEntry().getUser();
 
         progressBar = findViewById(R.id.progressBarBorrow);
         textView = findViewById(R.id.documentToDelete);

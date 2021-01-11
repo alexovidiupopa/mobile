@@ -11,12 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ro.alexpopa.documents.NetworkingManager;
 import ro.alexpopa.documents.R;
 import ro.alexpopa.documents.model.Document;
+import ro.alexpopa.documents.preferences.SharedPreferencesHelper;
 
 public class AddActivity extends AppCompatActivity implements MyCallback {
 
@@ -31,12 +33,8 @@ public class AddActivity extends AppCompatActivity implements MyCallback {
         setContentView(R.layout.activity_add_item);
         manager = new NetworkingManager(getApplication());
 
-        try {
-            ApplicationInfo applicationInfo = getApplicationContext().getPackageManager().getApplicationInfo(getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
-            user = applicationInfo.metaData.getString("user");
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(PreferenceManager.getDefaultSharedPreferences(this));
+        user = sharedPreferencesHelper.getEntry().getUser();
 
         progressBar = findViewById(R.id.progressBarAdd);
         textView = findViewById(R.id.documentName);

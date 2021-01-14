@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">3d printing</string>
+    <string name="usage">Usage</string>
+    <string name="size">Size</string>
+    <string name="item">Name</string>
+    <string name="id">id</string>
+    <string name="status">Status:</string>
+    <string name="ecost">eCost</string>
+    <string name="cost">cost</string>
+    <string name="time">Time:</string>
+</resources>

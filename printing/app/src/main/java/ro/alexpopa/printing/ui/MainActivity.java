@@ -1,4 +1,4 @@
-package ro.alexpopa.expenses.ui;
+package ro.alexpopa.printing.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,19 +19,19 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 
-import ro.alexpopa.expenses.MainApp;
-import ro.alexpopa.expenses.NetworkingManager;
-import ro.alexpopa.expenses.R;
-import ro.alexpopa.expenses.adapter.DataAdapter;
-import ro.alexpopa.expenses.preferences.SharedPreferencesEntry;
-import ro.alexpopa.expenses.preferences.SharedPreferencesHelper;
+import ro.alexpopa.printing.MainApp;
+import ro.alexpopa.printing.NetworkingManager;
+import ro.alexpopa.printing.R;
+import ro.alexpopa.printing.adapter.DataAdapter;
+import ro.alexpopa.printing.preferences.SharedPreferencesEntry;
+import ro.alexpopa.printing.preferences.SharedPreferencesHelper;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements MyCallback {
 
     private DataAdapter adapter;
     private ProgressBar progressBar;
-    private String user;
+    private int user;
     private FloatingActionButton fab;
     private View recyclerView;
     private NetworkingManager manager;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(PreferenceManager.getDefaultSharedPreferences(this));
         user = sharedPreferencesHelper.getEntry().getUser();
-        if (user.equals("")) {
+        if (user==0) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Current user:");
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
 
             // Set up the button
             builder.setPositiveButton("OK", (dialog, which) -> {
-                user = input.getText().toString();
+                user = Integer.parseInt(input.getText().toString());
                 sharedPreferencesHelper.saveUser(new SharedPreferencesEntry(user));
                 setupRecyclerView((RecyclerView) recyclerView);
                 loadData();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
             showError("No internet connection!");
         }
         progressBar.setVisibility(View.VISIBLE);
-        manager.loadAllExpenses(progressBar, this, user);
+        manager.loadAllModels(progressBar, this, user);
         return connectivity;
     }
 
@@ -149,13 +149,13 @@ public class MainActivity extends AppCompatActivity implements MyCallback {
     }
 
     public void onRefreshClick(View view) {
-        manager.loadAllExpenses(progressBar, this, user);
+        manager.loadAllModels(progressBar, this, user);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         adapter = new DataAdapter();
-        adapter.setFields(Arrays.asList("name","status","student","eCost","cost"));
-        ((MainApp) getApplication()).db.getExpensesDao().getExpenses()
+        adapter.setFields(Arrays.asList("model","status","client","time","cost"));
+        ((MainApp) getApplication()).db.getModelsDao().getModels()
                 .observe(this, items -> adapter.setItems(items));
         recyclerView.setAdapter(adapter);
     }

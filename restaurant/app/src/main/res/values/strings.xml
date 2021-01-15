@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">restaurant</string>
+    <string name="usage">Usage</string>
+    <string name="size">Size</string>
+    <string name="item">Name</string>
+    <string name="id">id</string>
+    <string name="status">Status:</string>
+    <string name="details">Details:</string>
+    <string name="type">Type:</string>
+    <string name="time">Time:</string>
+    <string name="firstButton">Kitchen</string>
+    <string name="secondButton">Client</string>
+    <string name="tableName">Name:</string>
+</resources>

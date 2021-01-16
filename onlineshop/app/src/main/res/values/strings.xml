@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">online shop</string>
+    <string name="usage">Usage</string>
+    <string name="size">Size</string>
+    <string name="item">Name</string>
+    <string name="id">id</string>
+    <string name="status">Status:</string>
+    <string name="details">Details:</string>
+    <string name="type">Type:</string>
+    <string name="time">Time:</string>
+    <string name="firstButton">Store</string>
+    <string name="secondButton">Manager</string>
+    <string name="tableName">Name:</string>
+    <string name="age">Age:</string>
+</resources>

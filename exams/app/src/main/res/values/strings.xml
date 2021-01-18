@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">exam</string>
+    <string name="main_screen_name">teacher</string>
+    <string name="second_screen_name">student</string>
+    <string name="third_screen_name">stats</string>
+    <string name="usage">Usage</string>
+    <string name="size">Size</string>
+    <string name="item">Name</string>
+    <string name="id">id</string>
+    <string name="type">Type</string>
+</resources>
